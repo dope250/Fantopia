@@ -1,0 +1,35 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://packedScenes/hiteffect_red_02.tscn" type="PackedScene" id=1]
+[ext_resource path="res://packedScenes/hiteffect_red_03.tscn" type="PackedScene" id=2]
+[ext_resource path="res://packedScenes/blood1.tscn" type="PackedScene" id=3]
+[ext_resource path="res://packedScenes/hiteffect_red_01.tscn" type="PackedScene" id=4]
+[ext_resource path="res://gfx/spriteframes_npc01.tres" type="SpriteFrames" id=5]
+[ext_resource path="res://scripts/npc.cs" type="Script" id=6]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 90.0
+height = 32.0
+
+[node name="NPC" type="KinematicBody2D"]
+position = Vector2( 3073, -671 )
+script = ExtResource( 6 )
+points = -5
+health = 5
+bloodDecal = ExtResource( 3 )
+hitEffect = [ ExtResource( 4 ), ExtResource( 1 ), ExtResource( 2 ) ]
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+position = Vector2( -95, 0 )
+scale = Vector2( 5, 5 )
+z_index = 1
+frames = ExtResource( 5 )
+animation = "idle_down"
+playing = true
+offset = Vector2( 20, 0 )
+
+[node name="Hitbox" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 72 )
+shape = SubResource( 1 )
+
+[connection signal="animation_finished" from="AnimatedSprite" to="." method="_on_AnimatedSprite_animation_finished"]
